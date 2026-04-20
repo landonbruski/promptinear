@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.DS_Store
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+dist/
+build/
+.next/
+.vercel/
+coverage/
