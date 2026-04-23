@@ -1,0 +1,85 @@
+[build-system]
+requires      = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name            = "promptinear"
+version         = "2.0.0"
+description     = "Bring-your-own-LLM prompt efficiency grader with CLI and TUI."
+readme          = "README.md"
+requires-python = ">=3.10"
+license         = { text = "MIT" }
+authors         = [{ name = "Landon Bruski", email = "landon@bruskibrandingservices.com" }]
+keywords        = ["llm", "prompt", "cli", "tui", "openai", "anthropic", "gemini"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Terminals",
+]
+dependencies = [
+    "rich>=13.7",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "pytest-mock>=3.12",
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+promptinear = "promptinear.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/landon/promptinear"
+Issues   = "https://github.com/landon/promptinear/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/promptinear"]
+
+[tool.ruff]
+line-length    = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+# RUF001/RUF002: allow typographic glyphs (×, –, ›) in user-facing strings and docs.
+ignore = ["E501", "RUF001", "RUF002"]
+
+[tool.pytest.ini_options]
+testpaths        = ["tests"]
+pythonpath       = ["src"]
+addopts          = "-ra --strict-markers"
+markers = [
+    "unit: unit tests",
+    "integration: integration tests",
+]
+
+[tool.coverage.run]
+source = ["src/promptinear"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+show_missing = true
+
+[tool.mypy]
+python_version       = "3.10"
+strict               = true
+ignore_missing_imports = true
